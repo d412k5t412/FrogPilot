@@ -85,6 +85,9 @@ class CarInterface(CarInterfaceBase):
     if candidate == CAR.KIA_OPTIMA_G4_FL:
       ret.steerActuatorDelay = 0.2
 
+    if candidate == CAR.KIA_SPORTAGE_5TH_GEN:
+      ret.steerActuatorDelay = 0.3
+
     # *** longitudinal control ***
     if candidate in CANFD_CAR:
       if not use_new_api:
