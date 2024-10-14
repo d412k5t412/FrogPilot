@@ -84,11 +84,7 @@ FrogPilotLongitudinalPanel::FrogPilotLongitudinalPanel(FrogPilotSettingsWindow *
       std::vector<QString> navigationToggleNames{tr("Intersections"), tr("Turns"), tr("With Lead")};
       longitudinalToggle = new FrogPilotButtonToggleControl(param, title, desc, navigationToggles, navigationToggleNames);
     } else if (param == "CEModelStopTime") {
-      std::map<int, QString> modelStopTimeLabels;
-      for (int i = 0; i <= 10; ++i) {
-        modelStopTimeLabels[i] = (i == 0) ? tr("Off") : QString::number(i) + " seconds";
-      }
-      longitudinalToggle = new FrogPilotParamValueControl(param, title, desc, icon, 0, 10, QString(), modelStopTimeLabels);
+      longitudinalToggle = new FrogPilotParamValueControl(param, title, desc, icon, 0, 10, tr(" seconds"), {{0, "Off"}});
     } else if (param == "CESignalSpeed") {
       std::vector<QString> ceSignalToggles{"CESignalLaneDetection"};
       std::vector<QString> ceSignalToggleNames{"Lane Detection"};
@@ -166,13 +162,13 @@ FrogPilotLongitudinalPanel::FrogPilotLongitudinalPanel(FrogPilotSettingsWindow *
       });
       longitudinalToggle = longitudinalTuneToggle;
     } else if (param == "AccelerationProfile") {
-      std::vector<QString> profileOptions{tr("Standard"), tr("Eco"), tr("Sport"), tr("Sport+")};
-      ButtonParamControl *profileSelection = new ButtonParamControl(param, title, desc, icon, profileOptions);
-      longitudinalToggle = profileSelection;
+      std::vector<QString> accelerationProfiles{tr("Standard"), tr("Eco"), tr("Sport"), tr("Sport+")};
+      ButtonParamControl *accelerationProfileToggle = new ButtonParamControl(param, title, desc, icon, accelerationProfiles);
+      longitudinalToggle = accelerationProfileToggle;
     } else if (param == "DecelerationProfile") {
-      std::vector<QString> profileOptions{tr("Standard"), tr("Eco"), tr("Sport")};
-      ButtonParamControl *profileSelection = new ButtonParamControl(param, title, desc, icon, profileOptions);
-      longitudinalToggle = profileSelection;
+      std::vector<QString> decelerationProfiles{tr("Standard"), tr("Eco"), tr("Sport")};
+      ButtonParamControl *decelerationProfileToggle = new ButtonParamControl(param, title, desc, icon, decelerationProfiles);
+      longitudinalToggle = decelerationProfileToggle;
     } else if (param == "IncreasedStoppedDistance") {
       longitudinalToggle = new FrogPilotParamValueControl(param, title, desc, icon, 0, 15, tr(" feet"));
 

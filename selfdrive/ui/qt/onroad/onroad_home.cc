@@ -95,10 +95,10 @@ void OnroadWindow::updateState(const UIState &s) {
   liveValid = scene.live_valid;
   showBlindspot = scene.show_blind_spot && (blindSpotLeft || blindSpotRight);
   showFPS = scene.show_fps;
-  showJerk = scene.show_jerk;
-  showSignal = scene.show_signal && (turnSignalLeft || turnSignalRight);
-  showSteering = scene.show_steering;
-  showTuning = scene.show_tuning;
+  showJerk = scene.jerk_metrics;
+  showSignal = scene.signal_metrics && (turnSignalLeft || turnSignalRight);
+  showSteering = scene.steering_metrics;
+  showTuning = scene.lateral_tuning_metrics;
   speedJerk = scene.speed_jerk;
   speedJerkDifference = scene.speed_jerk_difference;
   steer = scene.steer;
@@ -143,13 +143,13 @@ void OnroadWindow::mousePressEvent(QMouseEvent* e) {
     return;
   }
 
-  if (speedLimitRect.contains(pos) && scene.show_slc_offset_ui) {
-    scene.show_slc_offset = !scene.show_slc_offset;
-    params.putBoolNonBlocking("ShowSLCOffset", scene.show_slc_offset);
+  if (speedLimitRect.contains(pos) && scene.show_speed_limit_offset_ui) {
+    scene.show_speed_limit_offset = !scene.show_speed_limit_offset;
+    params.putBoolNonBlocking("ShowSLCOffset", scene.show_speed_limit_offset);
     return;
   }
 
-  if (scene.experimental_mode_via_screen && pos != timeoutPoint) {
+  if (scene.experimental_mode_via_tap && pos != timeoutPoint) {
     if (clickTimer.isActive()) {
       clickTimer.stop();
 
@@ -427,9 +427,8 @@ void OnroadWindow::paintEvent(QPaintEvent *event) {
       avgFPS = totalFPS / fpsQueue.size();
     }
 
-    QString fpsDisplayString = QString("FPS: %1 (%2) | Min: %3 | Max: %4 | Avg: %5")
+    QString fpsDisplayString = QString("FPS: %1 | Min: %3 | Max: %4 | Avg: %5")
         .arg(qRound(fps))
-        .arg(paramsMemory.getInt("CameraFPS"))
         .arg(qRound(minFPS))
         .arg(qRound(maxFPS))
         .arg(qRound(avgFPS));

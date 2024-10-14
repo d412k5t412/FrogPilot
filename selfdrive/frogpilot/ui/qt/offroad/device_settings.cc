@@ -1,6 +1,6 @@
 #include "selfdrive/frogpilot/ui/qt/offroad/device_settings.h"
 
-FrogPilotDevicePanel::FrogPilotDevicePanel(FrogPilotSettingsWindow *parent) : FrogPilotListWidget(parent), parent(parent) {
+FrogPilotDevicePanel::FrogPilotDevicePanel(FrogPilotSettingsWindow *parent) : FrogPilotListWidget(parent) {
   const std::vector<std::tuple<QString, QString, QString, QString>> deviceToggles {
     {"DeviceManagement", tr("Device Settings"), tr("Device behavior settings."), "../frogpilot/assets/toggle_icons/icon_device.png"},
     {"DeviceShutdown", tr("Device Shutdown Timer"), tr("How long the device stays on after you stop driving."), ""},
@@ -49,8 +49,8 @@ FrogPilotDevicePanel::FrogPilotDevicePanel(FrogPilotSettingsWindow *parent) : Fr
     } else if (param == "ScreenBrightness" || param == "ScreenBrightnessOnroad") {
       std::map<int, QString> brightnessLabels;
       int minBrightness = (param == "ScreenBrightnessOnroad") ? 0 : 1;
-      for (int i = 1; i <= 101; ++i) {
-        brightnessLabels[i] = (i == 101) ? tr("Auto") : QString::number(i) + "%";
+      for (int i = 0; i <= 101; ++i) {
+        brightnessLabels[i] = i == 101 ? tr("Auto") : i == 0 ? "Screen Off" : QString::number(i) + "%";
       }
       deviceToggle = new FrogPilotParamValueControl(param, title, desc, icon, minBrightness, 101, QString(), brightnessLabels, 1, false, true);
     } else if (param == "ScreenTimeout" || param == "ScreenTimeoutOnroad") {

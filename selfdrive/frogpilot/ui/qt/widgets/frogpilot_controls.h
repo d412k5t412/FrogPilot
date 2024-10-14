@@ -379,7 +379,7 @@ private:
   }
 
   void updateValueDisplay() {
-    int intValue = static_cast<int>(value);
+    int intValue = static_cast<int>(value / interval);
     if (valueLabels.count(intValue)) {
       valueLabel->setText(valueLabels.at(intValue));
     } else {
